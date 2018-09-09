@@ -8,4 +8,6 @@ public interface DAO {
 	
 	public List<Photo> findAll();
 
+	public List<Photo> findFromUser(String userName);
+
 }

@@ -2,19 +2,19 @@ package br.com.photoapi.model;
 
 public class Photo {
 	
-	private String url;
+	private String src;
 	private String alt;
 	
 	public Photo(String url, String alt) {
-		this.url = url;
+		this.src = url;
 		this.alt = alt;
 	}
 	
-	public String getUrl() {
-		return url;
+	public String getSrc() {
+		return src;
 	}
-	public void setUrl(String url) {
-		this.url = url;
+	public void setSrc(String url) {
+		this.src = url;
 	}
 	public String getAlt() {
 		return alt;

@@ -13,5 +13,9 @@ public class PhotoService {
 	public List<Photo> findAll(){
 		return photoDao.findAll();
 	}
+	
+	public List<Photo> findFromUser(String userName){
+		return photoDao.findFromUser(userName);
+	}
 
 }
