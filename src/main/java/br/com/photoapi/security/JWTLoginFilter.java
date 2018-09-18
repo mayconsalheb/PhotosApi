@@ -1,39 +1,51 @@
 package br.com.photoapi.security;
 
 import java.io.IOException;
+import java.util.Collections;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-public class JWTLoginFilter implements Filter {
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-	public JWTLoginFilter(String string, AuthenticationManager authenticationManager) {
-		// TODO Auto-generated constructor stub
+public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
+
+	protected JWTLoginFilter(String url, AuthenticationManager authManager){
+		super(new AntPathRequestMatcher(url));
+		setAuthenticationManager(authManager);
 	}
 
 	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
+	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse resp)
+			throws AuthenticationException, IOException, ServletException {
 
+		AccountCredentials credentials = new ObjectMapper()
+						.readValue(req.getInputStream(), AccountCredentials.class);
+		
+		return getAuthenticationManager().authenticate(
+					new UsernamePasswordAuthenticationToken(
+									credentials.getUsername(), 
+									credentials.getPassword(), 
+									Collections.emptyList())
+				);
 	}
-
+	
 	@Override
-	public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2)
-			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-
+	protected void successfulAuthentication(
+					HttpServletRequest request, 
+					HttpServletResponse response, 
+					FilterChain chain,
+					Authentication authResult) throws IOException, ServletException {
+		
+		TokenAuthenticationService.addAuthentication(response, authResult.getName());
 	}
-
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
-
-	}
-
 }

@@ -1,15 +1,12 @@
 package br.com.photoapi.security;
 
+import java.util.Collections;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -19,7 +16,7 @@ public class TokenAuthenticationService {
 	static final long EXPIRATION_TIME = 860_000_000;
 	static final String SECRET = "MySecret";
 	static final String TOKEN_PREFIX = "Bearer";
-	static final String HEADER_STRING = "Authorization";
+	static final String HEADER_STRING = "Authorization_jwt";
 								  
 	public static void addAuthentication(HttpServletResponse resp, String userName){
 		String JWT = Jwts.builder()
@@ -42,7 +39,7 @@ public class TokenAuthenticationService {
 								.getSubject();
 			
 			if(userName != null){
-				return UsernamePasswordAuthenticationToken(userName, null, Collections.emptyList());
+				return new UsernamePasswordAuthenticationToken(userName, null, Collections.emptyList());
 			}
 		}
 		
