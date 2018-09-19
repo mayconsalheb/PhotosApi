@@ -23,5 +23,4 @@ public class PhotoController {
 	public List<Photo> getPhotosFromUser(@PathVariable(value="userName") String userName){
 		return photoService.findFromUser(userName);
 	}
-
 }

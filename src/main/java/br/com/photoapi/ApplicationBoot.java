@@ -40,7 +40,5 @@ public class ApplicationBoot {
 		System.out.println("Olá, logou!");
 		return "logou!!";
 	}
-	
-	
 
 }
