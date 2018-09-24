@@ -2,6 +2,7 @@ package br.com.photoapi.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +13,8 @@ import br.com.photoapi.service.PhotoService;
 @RestController
 public class PhotoController {
 	
-	private PhotoService photoService = new PhotoService();
+	@Autowired
+	private PhotoService photoService;
 	
 	@GetMapping("/photos")
 	public List<Photo> getPhotos(){

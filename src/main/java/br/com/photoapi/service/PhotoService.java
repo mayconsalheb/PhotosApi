@@ -2,13 +2,17 @@ package br.com.photoapi.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import br.com.photoapi.dao.DAO;
-import br.com.photoapi.dao.PhotoDao;
 import br.com.photoapi.model.Photo;
 
+@Service
 public class PhotoService {
 	
-	private DAO photoDao = new PhotoDao();
+	@Autowired
+	private DAO photoDao;
 	
 	public List<Photo> findAll(){
 		return photoDao.findAll();
