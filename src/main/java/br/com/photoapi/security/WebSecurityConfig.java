@@ -6,7 +6,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -28,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	                UsernamePasswordAuthenticationFilter.class);
 	}
 	
+	/*TODO
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// cria uma conta default
@@ -35,6 +35,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 			.withUser("flavio")
 			.password("{noop}123teste")
 			.roles("ADMIN");
+		
 	}
+	*/
 
+	 @Override
+	  public void configure(AuthenticationManagerBuilder builder)
+	          throws Exception {
+	      builder.userDetailsService(new MyUserDetailsService());
+	  }
 }
